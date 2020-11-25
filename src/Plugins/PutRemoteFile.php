@@ -1,11 +1,6 @@
 <?php
-/**
- * Created by jacob.
- * User: jacob
- * Date: 16/5/20
- * Time: 下午8:31
- */
-namespace Jacobcyl\AliOSS\Plugins;
+
+namespace Ethreads\AliOSS\Plugins;
 use League\Flysystem\Config;
 use League\Flysystem\Plugin\AbstractPlugin;
 class PutRemoteFile extends AbstractPlugin

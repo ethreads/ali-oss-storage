@@ -1,9 +1,9 @@
 <?php
 
-namespace Jacobcyl\AliOSS;
+namespace Ethreads\AliOSS;
 
-use Jacobcyl\AliOSS\Plugins\PutFile;
-use Jacobcyl\AliOSS\Plugins\PutRemoteFile;
+use Ethreads\AliOSS\Plugins\PutFile;
+use Ethreads\AliOSS\Plugins\PutRemoteFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
@@ -35,6 +35,7 @@ class AliOssServiceProvider extends ServiceProvider
             $accessKey = $config['access_key'];
 
             $cdnDomain = empty($config['cdnDomain']) ? '' : $config['cdnDomain'];
+            $outDomain = empty($config['outDomain']) ? $cdnDomain : $config['outDomain'];
             $bucket    = $config['bucket'];
             $ssl       = empty($config['ssl']) ? false : $config['ssl']; 
             $isCname   = empty($config['isCName']) ? false : $config['isCName'];
@@ -46,7 +47,7 @@ class AliOssServiceProvider extends ServiceProvider
             if($debug) Log::debug('OSS config:', $config);
 
             $client  = new OssClient($accessId, $accessKey, $epInternal, $isCname);
-            $adapter = new AliOssAdapter($client, $bucket, $endPoint, $ssl, $isCname, $debug, $cdnDomain);
+            $adapter = new AliOssAdapter($client, $bucket, $endPoint, $ssl, $isCname, $debug, $cdnDomain, $outDomain);
 
             //Log::debug($client);
             $filesystem =  new Filesystem($adapter);

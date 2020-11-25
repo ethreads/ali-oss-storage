@@ -1,11 +1,6 @@
 <?php
-/**
- * Created by jacob.
- * Date: 2016/5/19 0019
- * Time: 下午 17:07
- */
 
-namespace Jacobcyl\AliOSS;
+namespace Ethreads\AliOSS;
 
 use Dingo\Api\Contract\Transformer\Adapter;
 use League\Flysystem\Adapter\AbstractAdapter;
@@ -70,6 +65,8 @@ class AliOssAdapter extends AbstractAdapter
     
     protected $cdnDomain;
 
+    protected $outDomain;
+
     protected $ssl;
 
     protected $isCname;
@@ -100,6 +97,7 @@ class AliOssAdapter extends AbstractAdapter
         $isCname = false,
         $debug = false,
         $cdnDomain,
+        $outDomain,
         $prefix = null,
         array $options = []
     )
@@ -112,6 +110,7 @@ class AliOssAdapter extends AbstractAdapter
         $this->ssl = $ssl;
         $this->isCname = $isCname;
         $this->cdnDomain = $cdnDomain;
+        $this->outDomain = $outDomain;
         $this->options = array_merge($this->options, $options);
     }
 
@@ -568,7 +567,7 @@ class AliOssAdapter extends AbstractAdapter
     public function getUrl( $path )
     {
         if (!$this->has($path)) throw new FileNotFoundException($filePath.' not found');
-        return ( $this->ssl ? 'https://' : 'http://' ) . ( $this->isCname ? ( $this->cdnDomain == '' ? $this->endPoint : $this->cdnDomain ) : $this->bucket . '.' . $this->endPoint ) . '/' . ltrim($path, '/');
+        return ( $this->ssl ? 'https://' : 'http://' ) . ( $this->isCname ? ( $this->outDomain == '' ? $this->endPoint : $this->outDomain ) : $this->bucket . '.' . $this->endPoint ) . '/' . ltrim($path, '/');
     }
 
     /**
